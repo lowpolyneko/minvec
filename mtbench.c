@@ -22,17 +22,17 @@ void* mutator_thread(void* voidrate) {
     long start_time=__rdtscp(&dummy);
     long deadline=start_time+interval;
     long after=0;
-    while(deadline<(start_time+DURATION)) { // 5 second experiment        
+    while(deadline<(start_time+DURATION)) { // 1 second experiment        
         pthread_mutex_lock(&lock);
-        array[after%MAX]--;
-        array[(after+1)%MAX]++;
+        array[after%arrsize]--;
+        array[(after+1)%arrsize]++;
         pthread_mutex_unlock(&lock); 
         after=__rdtscp(&dummy);
         if(after>deadline) {
             printf("Mutator missed deadline for rate %ld.\n",rate);
             return (void*)-1;
         }
-        else { // wait until next time            
+        else { // wait until next time     
             do{ 
                 __pause();
                 after=__rdtscp(&dummy);
@@ -71,6 +71,7 @@ void* scanner_main(void* unused) {
                 minindex=index;
             }
         }
+//        scanner_thread(0);
         scans++;
     }
     return 0;
