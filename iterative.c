@@ -58,9 +58,9 @@ int minindex(int* array, int size) {
 		return index;
 
 	// find index from block if not found in leftovers
-	for (i = min_block; i < min_block + 15; ++i)
-		if (array[i] == min)
-			return i;
+	__m512i a = _mm512_load_si512(array + min_block);
+	__m512i b = _mm512_set1_epi32(min);
+	__mmask16 c = _mm512_cmpeq_epi32_mask(a, b);
 
-	return i;
+	return min_block + __builtin_ctz(c);
 }
