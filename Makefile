@@ -5,7 +5,7 @@ ROOT ?= ../..
 
 MAKE := make
 
-CFLAGS += -g -O3 -mavx2 -Winline -mavx512f -mavx512dq -mavx512cd -mavx512bw -mavx512vl  -Wall
+CFLAGS += -g -O3 -mavx2 -Winline -mavx512f -mavx512dq -mavx512cd -mavx512bw -mavx512vl -mbmi -Wall
 
 .PHONY: all clean
 

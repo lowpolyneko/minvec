@@ -69,5 +69,5 @@ int minindex(int* array, int size) {
 	__m512i b = _mm512_set1_epi32(min);
 	__mmask16 c = _mm512_cmpeq_epi32_mask(a, b);
 
-	return min_block + __builtin_ctz(c);
+	return min_block + __tzcnt_u32(c);
 }
